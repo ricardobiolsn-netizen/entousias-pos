@@ -48,7 +48,7 @@ html,body{height:100%;font-family:var(--font);background:var(--bg);color:var(--t
 .pos-title{font-size:22px;font-weight:600;letter-spacing:-.02em}
 .pos-session{margin-left:auto;display:flex;align-items:center;gap:8px;font-size:13px;color:var(--text2)}
 .session-dot{width:8px;height:8px;border-radius:50%;background:var(--green)}
-.session-name{font-weight:500;color:var(--text);cursor:pointer;padding:4px 8px;border-radius:8px;transition:background .15s}
+.session-name{font-weight:500;color:var(--text);cursor:pointer;padding:4px 8px;border-radius:8px;transition:background .15s;background:none;border:none;font-family:var(--font);font-size:13px}
 .session-name:hover{background:var(--surface3)}
 #pos-search-wrap{padding:14px 20px 12px}
 .search-box{display:flex;align-items:center;gap:10px;background:var(--surface);border:.5px solid var(--border2);border-radius:var(--rsm);padding:10px 14px;box-shadow:var(--sh-sm)}
@@ -116,7 +116,7 @@ html,body{height:100%;font-family:var(--font);background:var(--bg);color:var(--t
 #pay-btn{height:52px;border-radius:var(--rsm);border:none;background:var(--text);color:#fff;font-family:var(--font);font-size:16px;font-weight:600;cursor:pointer;transition:all .15s;display:flex;align-items:center;justify-content:center;gap:8px;letter-spacing:-.01em}
 #pay-btn:hover{background:#2d2d2f}
 #pay-btn:active{transform:scale(.98)}
-#pay-btn.disabled{opacity:.4;cursor:default}
+#pay-btn.disabled{opacity:.4;cursor:default;pointer-events:none}
 
 /* ══ CATALOG ══ */
 #view-catalog{flex-direction:column;background:var(--bg);overflow:hidden}
@@ -405,10 +405,10 @@ html,body{height:100%;font-family:var(--font);background:var(--bg);color:var(--t
       <span class="pos-title">Entousias</span>
       <div class="pos-session">
         <div class="session-dot"></div>
-        <span class="session-name" id="session-name" onclick="openUserModal()">Cargando...</span>
+        <button class="session-name" id="session-name" data-action="openUserModal()">Cargando...</button>
         <span>·</span>
         <span id="clock">--:--</span>
-        <button onclick="logOut()" style="background:none;border:none;cursor:pointer;padding:4px 8px;border-radius:8px;font-size:12px;color:var(--text3);font-family:var(--font);font-weight:500;transition:all .15s;display:flex;align-items:center;gap:4px;" onmouseover="this.style.background='var(--red-l)';this.style.color='var(--red)'" onmouseout="this.style.background='none';this.style.color='var(--text3)'">
+        <button data-action="logOut()" style="background:none;border:none;cursor:pointer;padding:4px 8px;border-radius:8px;font-size:12px;color:var(--text3);font-family:var(--font);font-weight:500;transition:all .15s;display:flex;align-items:center;gap:4px;"  >
           <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
           Cerrar sesión
         </button>
@@ -457,7 +457,7 @@ html,body{height:100%;font-family:var(--font);background:var(--bg);color:var(--t
           <svg viewBox="0 0 24 24"><path d="M12 2v20M2 12h20"/></svg>Mixto
         </button>
       </div>
-      <button id="pay-btn" class="disabled" onclick="openPayModal()">Cobrar</button>
+      <button id="pay-btn" class="disabled" data-action="openPayModal()">Cobrar</button>
     </div>
   </div>
 </div>
@@ -564,7 +564,7 @@ html,body{height:100%;font-family:var(--font);background:var(--bg);color:var(--t
 </div><!-- #app -->
 
 <!-- ══ USER SWITCH MODAL ══ -->
-<div class="overlay" id="modal-users" style="display:none" onclick="closeOverlay('modal-users',event)">
+<div class="overlay" id="modal-users" onclick="closeOverlay('modal-users',event)">
   <div class="modal-box" style="width:440px">
     <div class="modal-header">
       <span class="modal-title">Cambiar usuario</span>
@@ -575,7 +575,7 @@ html,body{height:100%;font-family:var(--font);background:var(--bg);color:var(--t
 </div>
 
 <!-- ══ PIN MODAL ══ -->
-<div class="overlay" id="modal-pin" style="display:none">
+<div class="overlay" id="modal-pin">
   <div class="modal-box" style="width:320px">
     <div class="modal-header">
       <span class="modal-title">Introduce tu PIN</span>
@@ -609,7 +609,7 @@ html,body{height:100%;font-family:var(--font);background:var(--bg);color:var(--t
 </div>
 
 <!-- ══ PAY MODAL ══ -->
-<div class="overlay" id="modal-pay-wrap" style="display:none" onclick="closeOverlay('modal-pay-wrap',event)">
+<div class="overlay" id="modal-pay-wrap" onclick="closeOverlay('modal-pay-wrap',event)">
   <div class="modal-box" id="modal-pay-box">
     <div class="modal-header">
       <span class="modal-title">Cobrar</span>
@@ -676,7 +676,7 @@ html,body{height:100%;font-family:var(--font);background:var(--bg);color:var(--t
 </div>
 
 <!-- ══ RECEIPT MODAL ══ -->
-<div class="overlay" id="modal-receipt-wrap" style="display:none" onclick="closeOverlay('modal-receipt-wrap',event)">
+<div class="overlay" id="modal-receipt-wrap" onclick="closeOverlay('modal-receipt-wrap',event)">
   <div class="modal-box" id="modal-receipt-box" style="width:480px;max-height:92vh;overflow-y:auto">
     <div class="modal-header">
       <span class="modal-title">Ticket de venta</span>
@@ -706,7 +706,7 @@ html,body{height:100%;font-family:var(--font);background:var(--bg);color:var(--t
 </div>
 
 <!-- ADD PRODUCT MODAL -->
-<div class="overlay" id="modal-prod-wrap" style="display:none" onclick="closeOverlay('modal-prod-wrap',event)">
+<div class="overlay" id="modal-prod-wrap" onclick="closeOverlay('modal-prod-wrap',event)">
   <div class="modal-box" id="modal-prod-box" style="width:500px;max-height:90vh;overflow-y:auto">
     <div class="modal-header">
       <span class="modal-title">Nuevo producto</span>
@@ -769,7 +769,7 @@ html,body{height:100%;font-family:var(--font);background:var(--bg);color:var(--t
 </div>
 
 <!-- SUCCESS -->
-<div id="success-overlay" style="display:none">
+<div id="success-overlay">
   <div class="success-circle"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
   <div class="success-text">¡Cobrado!</div>
   <div class="success-sub" id="success-sub"></div>
@@ -778,7 +778,7 @@ html,body{height:100%;font-family:var(--font);background:var(--bg);color:var(--t
 
 
 <!-- LOCKSCREEN -->
-<div id="lockscreen" style="display:none">
+<div id="lockscreen">
   <div class="lock-brand">
     <div class="lock-logo">
       <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M4.22 4.22l2.12 2.12M17.66 17.66l2.12 2.12M2 12h3M19 12h3M4.22 19.78l2.12-2.12M17.66 6.34l2.12-2.12"/></svg>
@@ -1057,7 +1057,7 @@ function resetPayMethod(){
 
 // ══ PAY MODAL ══
 function openPayModal(){
-  if(!ticket.length)return;
+  if(!ticket.length||document.getElementById('pay-btn').classList.contains('disabled'))return;
   cashCents='';updateCashDisplay();
   setModalMethod(payMethod);
   openModal('modal-pay-wrap');
@@ -1146,9 +1146,9 @@ function confirmPay(){
     `${sale.items.reduce((s,i)=>s+i.qty,0)} artículos · ${modalMethod==='card'?'Tarjeta':'Efectivo'}`;
   document.getElementById('success-change').textContent=change>0?'Cambio: '+fmt(change):'';
   const so=document.getElementById('success-overlay');
-  so.style.display='flex';
+  so.classList.add('show');
   setTimeout(()=>{
-    so.style.display='none';
+    so.classList.remove('show');
     showReceipt(sale);
   },1400);
 }
@@ -1374,15 +1374,9 @@ function renderReports(){
 }
 
 // ══ MODAL HELPERS ══
-function openModal(id){
-  var el=document.getElementById(id);
-  el.style.display='flex';
-}
-function closeModal(id){
-  var el=document.getElementById(id);
-  el.style.display='none';
-}
-function closeOverlay(id,e){if(e.target===document.getElementById(id))closeModal(id);}
+function openModal(id){document.getElementById(id).classList.add('open')}
+function closeModal(id){document.getElementById(id).classList.remove('open')}
+function closeOverlay(id,e){if(e.target===document.getElementById(id))closeModal(id)}
 
 // ══ TOAST ══
 function toast(msg,type='info'){
@@ -1472,12 +1466,12 @@ function lock(){
   locked=true;
   renderLockUsers();
   lockTick();
-  document.getElementById('lockscreen').style.display='flex';
+  document.getElementById('lockscreen').classList.add('show');
 }
 
 function unlock(){
   locked=false;
-  document.getElementById('lockscreen').style.display='none';
+  document.getElementById('lockscreen').classList.remove('show');
   updateSessionLabel();
   toast('Sesión iniciada como '+getCurrentUser().name,'ok');
 }
@@ -1491,6 +1485,23 @@ renderCatsRow();
 renderProds();
 renderTicket();
 document.getElementById('tkt-num').textContent='#'+String(S.tktN).padStart(4,'0');
+
+// ── EVENT DELEGATION — catches all taps on Android Chrome ──
+document.addEventListener('click', function(e) {
+  var t = e.target;
+  // walk up max 5 levels to find the element with data-action
+  for (var i = 0; i < 5; i++) {
+    if (!t || t === document) break;
+    var action = t.getAttribute('data-action');
+    if (action) {
+      e.preventDefault();
+      e.stopPropagation();
+      eval(action);
+      return;
+    }
+    t = t.parentElement;
+  }
+});
 </script>
 </body>
 </html>
