@@ -6,206 +6,126 @@
 <style>
 * { box-sizing: border-box; margin: 0; padding: 0; }
 body { font-family: sans-serif; padding: 20px; background: #f5f5f7; }
-#log { background: white; padding: 15px; border-radius: 12px; margin-bottom: 16px; min-height: 60px; font-size: 14px; border: 2px solid #34c759; }
-h2 { font-size: 14px; color: #666; margin: 16px 0 8px; text-transform: uppercase; letter-spacing: 1px; }
-.grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 8px; }
-button {
-  height: 56px; border-radius: 12px; border: none;
-  font-size: 13px; font-weight: 600; color: white;
-  background: #1d1d1f; cursor: pointer;
-}
-span.clickable {
-  display: flex; align-items: center; justify-content: center;
-  height: 56px; border-radius: 12px;
-  font-size: 13px; font-weight: 600; color: white;
-  background: #534AB7; cursor: pointer;
-}
-a.clickable {
-  display: flex; align-items: center; justify-content: center;
-  height: 56px; border-radius: 12px;
-  font-size: 13px; font-weight: 600; color: white;
-  background: #BA7517; text-decoration: none;
-}
-div.clickable {
-  display: flex; align-items: center; justify-content: center;
-  height: 56px; border-radius: 12px;
-  font-size: 13px; font-weight: 600; color: white;
-  background: #D4537E; cursor: pointer;
-}
-.overlay {
-  display: none; position: fixed; inset: 0;
-  background: rgba(0,0,0,0.8); z-index: 100;
+#log { background: white; padding: 15px; border-radius: 12px; margin-bottom: 16px; font-size: 16px; min-height: 60px; border: 2px solid #34c759; }
+h2 { font-size: 13px; color: #666; margin: 16px 0 8px; text-transform: uppercase; }
+button { display: block; width: 100%; height: 60px; margin-bottom: 10px; border-radius: 12px; border: none; font-size: 16px; font-weight: 600; color: white; background: #1d1d1f; }
+
+/* OPCIÓN 1: display flex */
+#modal-flex {
+  display: none;
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,0.8);
   align-items: center; justify-content: center;
+  z-index: 100;
 }
-.modal {
-  background: white; padding: 30px; border-radius: 20px;
-  text-align: center; width: 280px;
+/* OPCIÓN 2: display block con centrado por padding */
+#modal-block {
+  display: none;
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,0.8);
+  z-index: 100;
+  padding-top: 150px;
+  text-align: center;
 }
-.modal h3 { margin-bottom: 16px; font-size: 18px; }
-.modal button { width: 100%; background: #ff3b30; }
-.fixed-bar {
-  position: fixed; bottom: 0; left: 0; right: 0;
-  background: #1d1d1f; padding: 12px 20px;
-  display: flex; gap: 8px; z-index: 50;
+/* OPCIÓN 3: visibility hidden/visible */
+#modal-vis {
+  visibility: hidden;
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,0.8);
+  z-index: 100;
+  padding-top: 150px;
+  text-align: center;
 }
-.fixed-bar button { flex: 1; background: #34c759; height: 50px; }
+/* OPCIÓN 4: opacity 0/1 */
+#modal-opacity {
+  opacity: 0;
+  pointer-events: none;
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,0.8);
+  z-index: 100;
+  padding-top: 150px;
+  text-align: center;
+}
+/* OPCIÓN 5: translate fuera de pantalla */
+#modal-translate {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.8);
+  z-index: 100;
+  padding-top: 150px;
+  text-align: center;
+  transform: translateX(200%);
+}
+
+.modal-inner {
+  display: inline-block;
+  background: white; padding: 30px;
+  border-radius: 20px; width: 280px;
+  text-align: center;
+}
+.modal-inner h3 { margin-bottom: 16px; font-size: 20px; }
+.modal-inner button { background: #ff3b30; }
 </style>
 </head>
 <body>
 
-<div id="log">Resultado aparece aquí...</div>
+<div id="log">Toca un botón...</div>
 
-<h2>TEST A — Button con onclick inline</h2>
-<div class="grid">
-  <button onclick="log('A1 onclick inline OK')">A1 onclick inline</button>
-  <button onclick="log('A2 onclick inline OK')">A2 onclick inline</button>
-</div>
+<h2>Opción 1 — display:flex</h2>
+<button onclick="document.getElementById('modal-flex').style.display='flex'; log('1: display flex aplicado')">Abrir con display:FLEX</button>
 
-<h2>TEST B — Button con addEventListener</h2>
-<div class="grid">
-  <button id="b1">B1 addEventListener</button>
-  <button id="b2">B2 addEventListener</button>
-</div>
+<h2>Opción 2 — display:block</h2>
+<button onclick="document.getElementById('modal-block').style.display='block'; log('2: display block aplicado')" style="background:#534AB7">Abrir con display:BLOCK</button>
 
-<h2>TEST C — Button con window.onload listener</h2>
-<div class="grid">
-  <button id="c1">C1 window.onload</button>
-  <button id="c2">C2 window.onload</button>
-</div>
+<h2>Opción 3 — visibility</h2>
+<button onclick="document.getElementById('modal-vis').style.visibility='visible'; log('3: visibility visible aplicado')" style="background:#1D9E75">Abrir con VISIBILITY</button>
 
-<h2>TEST D — SPAN (no es button)</h2>
-<div class="grid">
-  <span class="clickable" onclick="log('D1 span onclick OK')">D1 span onclick</span>
-  <span class="clickable" id="d2">D2 span addEventListener</span>
-</div>
+<h2>Opción 4 — opacity</h2>
+<button onclick="document.getElementById('modal-opacity').style.opacity='1'; document.getElementById('modal-opacity').style.pointerEvents='auto'; log('4: opacity 1 aplicado')" style="background:#BA7517">Abrir con OPACITY</button>
 
-<h2>TEST E — DIV clickable</h2>
-<div class="grid">
-  <div class="clickable" onclick="log('E1 div onclick OK')">E1 div onclick</div>
-  <div class="clickable" id="e2">E2 div addEventListener</div>
-</div>
-
-<h2>TEST F — Abrir modal (display:none → flex)</h2>
-<div class="grid">
-  <button onclick="abrirModal('m1')">F1 abrir modal onclick</button>
-  <button id="f2">F2 abrir modal addEventListener</button>
-</div>
-
-<h2>TEST G — Button dentro de flex container</h2>
-<div style="display:flex; gap:8px; margin-bottom:8px">
-  <button style="flex:1" onclick="log('G1 flex child onclick OK')">G1 flex child onclick</button>
-  <button style="flex:1" id="g2">G2 flex child addEventListener</button>
-</div>
-
-<h2>TEST H — Button con position:fixed parent (barra abajo)</h2>
-<div class="fixed-bar">
-  <button onclick="log('H1 fixed bar onclick OK')">H1 fixed onclick</button>
-  <button id="h2">H2 fixed addEventListener</button>
-</div>
-
-<h2>TEST I — Button con overflow:hidden parent</h2>
-<div style="overflow:hidden; border-radius:12px; margin-bottom:8px">
-  <div class="grid" style="margin:0">
-    <button onclick="log('I1 overflow:hidden parent onclick OK')">I1 overflow:hidden onclick</button>
-    <button id="i2">I2 overflow:hidden addEventListener</button>
-  </div>
-</div>
-
-<h2>TEST J — Button con z-index overlay encima</h2>
-<div style="position:relative; margin-bottom:8px">
-  <div class="grid">
-    <button onclick="log('J1 sin overlay OK')">J1 sin overlay</button>
-    <button id="j2">J2 sin overlay addEventListener</button>
-  </div>
-</div>
-
-<h2>TEST K — classList.toggle vs style.display</h2>
-<div class="grid">
-  <button onclick="log('K1 onclick OK - ahora abre con classList'); document.getElementById('m2').classList.add('open')">K1 modal classList</button>
-  <button id="k2">K2 modal style.display</button>
-</div>
-
-<h2>TEST L — Button disabled que se habilita</h2>
-<div class="grid">
-  <button id="l-enable" onclick="habilitarL()">L1 Habilitar botón</button>
-  <button id="l-disabled" disabled onclick="log('L2 disabled activado OK')">L2 (deshabilitado)</button>
-</div>
-
-<div style="height:80px"></div><!-- space for fixed bar -->
+<h2>Opción 5 — translateX</h2>
+<button onclick="document.getElementById('modal-translate').style.transform='translateX(0)'; log('5: translate 0 aplicado')" style="background:#D4537E">Abrir con TRANSLATE</button>
 
 <!-- MODALES -->
-<div class="overlay" id="m1">
-  <div class="modal">
-    <h3>Modal F1/F2 abierto ✓</h3>
-    <button onclick="cerrarModal('m1')">Cerrar</button>
+<div id="modal-flex">
+  <div class="modal-inner">
+    <h3>✅ FLEX funciona</h3>
+    <button onclick="document.getElementById('modal-flex').style.display='none'">Cerrar</button>
   </div>
 </div>
 
-<div class="overlay open" id="m2" style="display:none">
-  <div class="modal">
-    <h3>Modal K abierto ✓</h3>
-    <button onclick="document.getElementById('m2').style.display='none'">Cerrar</button>
+<div id="modal-block">
+  <div class="modal-inner">
+    <h3>✅ BLOCK funciona</h3>
+    <button onclick="document.getElementById('modal-block').style.display='none'">Cerrar</button>
+  </div>
+</div>
+
+<div id="modal-vis">
+  <div class="modal-inner">
+    <h3>✅ VISIBILITY funciona</h3>
+    <button onclick="document.getElementById('modal-vis').style.visibility='hidden'">Cerrar</button>
+  </div>
+</div>
+
+<div id="modal-opacity">
+  <div class="modal-inner">
+    <h3>✅ OPACITY funciona</h3>
+    <button onclick="document.getElementById('modal-opacity').style.opacity='0'; document.getElementById('modal-opacity').style.pointerEvents='none'">Cerrar</button>
+  </div>
+</div>
+
+<div id="modal-translate">
+  <div class="modal-inner">
+    <h3>✅ TRANSLATE funciona</h3>
+    <button onclick="document.getElementById('modal-translate').style.transform='translateX(200%)'">Cerrar</button>
   </div>
 </div>
 
 <script>
 function log(msg) {
-  document.getElementById('log').innerHTML = '✅ ' + msg + '<br><small>' + new Date().toLocaleTimeString() + '</small>';
+  document.getElementById('log').innerHTML = msg + '<br><small>' + new Date().toLocaleTimeString() + '</small>';
 }
-
-function abrirModal(id) {
-  log('Abriendo modal ' + id);
-  document.getElementById(id).style.display = 'flex';
-}
-
-function cerrarModal(id) {
-  document.getElementById(id).style.display = 'none';
-  log('Modal ' + id + ' cerrado');
-}
-
-function habilitarL() {
-  var btn = document.getElementById('l-disabled');
-  btn.disabled = false;
-  btn.style.background = '#34c759';
-  log('L1: botón L2 habilitado, ahora tócalo');
-}
-
-// B - addEventListener directo
-document.getElementById('b1').addEventListener('click', function() { log('B1 addEventListener OK'); });
-document.getElementById('b2').addEventListener('click', function() { log('B2 addEventListener OK'); });
-
-// D2 - span addEventListener
-document.getElementById('d2').addEventListener('click', function() { log('D2 span addEventListener OK'); });
-
-// E2 - div addEventListener  
-document.getElementById('e2').addEventListener('click', function() { log('E2 div addEventListener OK'); });
-
-// F2 - modal addEventListener
-document.getElementById('f2').addEventListener('click', function() { abrirModal('m1'); });
-
-// G2 - flex child
-document.getElementById('g2').addEventListener('click', function() { log('G2 flex child addEventListener OK'); });
-
-// H2 - fixed bar
-document.getElementById('h2').addEventListener('click', function() { log('H2 fixed bar addEventListener OK'); });
-
-// I2 - overflow hidden parent
-document.getElementById('i2').addEventListener('click', function() { log('I2 overflow:hidden addEventListener OK'); });
-
-// J2
-document.getElementById('j2').addEventListener('click', function() { log('J2 addEventListener OK'); });
-
-// K2 - style.display modal
-document.getElementById('k2').addEventListener('click', function() {
-  log('K2 abriendo con style.display');
-  document.getElementById('m2').style.display = 'flex';
-});
-
-// C - window.onload
-window.addEventListener('load', function() {
-  document.getElementById('c1').addEventListener('click', function() { log('C1 window.onload listener OK'); });
-  document.getElementById('c2').addEventListener('click', function() { log('C2 window.onload listener OK'); });
-});
 </script>
 </body>
 </html>
