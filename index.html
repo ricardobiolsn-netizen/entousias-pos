@@ -406,10 +406,10 @@ html,body{height:100%;font-family:var(--font);background:var(--bg);color:var(--t
       <span class="pos-title">Entousias</span>
       <div class="pos-session">
         <div class="session-dot"></div>
-        <button class="session-name" id="session-name" onclick="openUserModal()">Cargando...</button>
+        <button class="session-name" id="session-name" onclick="alert('maria');openUserModal()">Cargando...</button>
         <span>·</span>
         <span id="clock">--:--</span>
-        <button id="btn-logout" class="btn-logout" onclick="logOut()">
+        <button id="btn-logout" class="btn-logout" onclick="alert('logout');logOut()">
           <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
           Cerrar sesión
         </button>
@@ -458,7 +458,7 @@ html,body{height:100%;font-family:var(--font);background:var(--bg);color:var(--t
           <svg viewBox="0 0 24 24"><path d="M12 2v20M2 12h20"/></svg>Mixto
         </button>
       </div>
-      <button id="pay-btn" class="disabled" onclick="openPayModal()">Cobrar</button>
+      <button id="pay-btn" class="disabled" onclick="alert('cobrar');openPayModal()">Cobrar</button>
     </div>
   </div>
 </div>
